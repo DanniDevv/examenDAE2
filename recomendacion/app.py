@@ -4,10 +4,8 @@ from scipy.spatial.distance import cosine
 import requests
 
 app = Flask(__name__)
-
 # Cargar datos de películas
 movies_df = pd.read_csv("movies.csv")
-
 # Crear vectores de géneros para cada película
 genres_set = set(genre for sublist in movies_df['genres'].str.split('|') for genre in sublist)
 movies_df['genre_vector'] = movies_df['genres'].apply(lambda x: [1 if genre in x.split('|') else 0 for genre in genres_set])
@@ -15,7 +13,7 @@ movies_df['genre_vector'] = movies_df['genres'].apply(lambda x: [1 if genre in x
 @app.route("/recommendations/<user_id>", methods=["GET"])
 def recommend_for_user(user_id):
     # Obtener géneros del usuario desde un servicio externo
-    response = requests.get(f"http://MiProyecto:8080/mysql/users/{user_id}")
+    response = requests.get(f"http://localhost:5185/mysql/users/{user_id}")
 
     if response.status_code != 200:
         return jsonify({"error": "Error al obtener datos de usuarios"}), 500

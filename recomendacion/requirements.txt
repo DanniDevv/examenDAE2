@@ -1,20 +1,5 @@
-# Usa la imagen base de Python 3.9
-FROM python:3.9-slim
-
-# Establece el directorio de trabajo en /app
-WORKDIR /app
-
-# Copia el código de la aplicación al contenedor
-COPY . .
-
-# Instala las dependencias del proyecto
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Expone el puerto 5050 en el contenedor
-EXPOSE 5050
-
-# Define la variable de entorno FLASK_APP
-ENV FLASK_APP=app.py
-
-# Ejecuta la aplicación Flask al iniciar el contenedor
-CMD ["flask", "run", "--host=0.0.0.0", "--port=5050"]
+Flask
+redis
+requests
+pandas
+scipy

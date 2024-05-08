@@ -5,7 +5,7 @@ import requests
 app = Flask(__name__)
 
 # Conexión a Redis
-r = redis.Redis(host='localhost', port=6379, db=0)
+r = redis.Redis(host='redis', port=6379, db=0)
 
 all_genres = [
     "Action", "Adventure", "Animation", "Children", "Comedy", "Crime",
@@ -38,7 +38,7 @@ def select_genres():
 
 @app.route('/recommendations/<int:user_id>', methods=['GET'])
 def recommendations(user_id):
-    response = requests.get(f"http://localhost:5050/recommendations/user:{user_id}")
+    response = requests.get(f"http://recomendacion:5050/recommendations/user:{user_id}")
 
     if response.status_code != 200:
         return f"Error al obtener recomendaciones para el usuario {user_id}"

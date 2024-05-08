@@ -13,7 +13,7 @@ movies_df['genre_vector'] = movies_df['genres'].apply(lambda x: [1 if genre in x
 @app.route("/recommendations/<user_id>", methods=["GET"])
 def recommend_for_user(user_id):
     # Obtener géneros del usuario desde un servicio externo
-    response = requests.get(f"http://localhost:5185/mysql/users/{user_id}")
+    response = requests.get(f"http://worker:8080/mysql/users/{user_id}")
 
     if response.status_code != 200:
         return jsonify({"error": "Error al obtener datos de usuarios"}), 500

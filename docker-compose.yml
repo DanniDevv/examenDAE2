@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  flask:
+    build: ./voting
+    ports:
+      - '5000:5000' # Mapeo de puertos para acceder a Flask desde el host
+    depends_on:
+      - redis
+      - recomendacion
+
+  mysql:
+    image: mysql:8 # Usa la última versión de MySQL
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password # Establece la contraseña del usuario root
+      MYSQL_DATABASE: mydatabase # Nombre de la base de datos que deseas crear
+      MYSQL_USER: myuser # Usuario personalizado
+      MYSQL_PASSWORD: mypassword # Contraseña para el usuario personalizado
+    # Nombre de la base de datos
+    ports:
+      - '3306:3306'
+
+  redis:
+    image: redis:latest # Usa la última imagen de Redis
+    ports:
+      - '6379:6379'
+
+  worker:
+    build: ./worker
+    ports:
+      - '8080:8080'
+    depends_on:
+      - redis
+      - mysql
+
+  recomendacion:
+    build: ./recomendacion
+    ports:
+      - '5050:5050' # Mapeo de puertos para acceder a Flask desde el host
+    depends_on:
+      - worker

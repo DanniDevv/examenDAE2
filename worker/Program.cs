@@ -9,12 +9,12 @@ using System.Collections.Generic;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configurar conexión a Redis
-var redisConnectionString = "localhost:6379"; // Ajusta según sea necesario
+var redisConnectionString = "redis:6379"; // Ajusta según sea necesario
 var redis = ConnectionMultiplexer.Connect(redisConnectionString);
 builder.Services.AddSingleton<IConnectionMultiplexer>(redis);
 
 // Configurar conexión a MySQL
-var mysqlConnectionString = "Server=localhost;Port=3306;Database=mydatabase;Uid=myuser;Pwd=mypassword;";
+var mysqlConnectionString = "Server=mysql;Port=3306;Database=mydatabase;Uid=myuser;Pwd=mypassword;";
 builder.Services.AddTransient<MySqlConnection>(_ => new MySqlConnection(mysqlConnectionString)); // Transient para conexiones únicas
 
 using (var mysqlConnection = new MySqlConnection(mysqlConnectionString))
